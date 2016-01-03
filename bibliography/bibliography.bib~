@@ -1,0 +1,7 @@
+@book{Pierce2002,
+	author		= {Pierce, Benjamin},
+	title 		= {Types and Programming Languages},
+	publisher 	= {MIT Press},
+	year		= {2002},
+}
+
