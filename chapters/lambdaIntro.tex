@@ -1,7 +1,392 @@
 \chapter{Einleitung}
 
-Das Lambdakalkül ist eine (typenlose) Theorie die Funktionen als 
-Abbildungsvorschriften und nicht als Graphen erfasst\autocite{Barendregt2012}.
+Das Lambdakalkül ist eine (typenlose) Theorie die das Konzept Funktion als 
+Abbildungsvorschriften und nicht, wie in der modernen Mathematik verbreiteter, 
+als Graphen erfasst\autocite{Barendregt2012}.
+
+\paragraph{Funktionen als Abbildungsvorschriften }
+
+Bei der Formalisierung einer Funktionen als Abbildungsvorschrift wird 
+diese als die explizite Anweisung kodiert, 
+wie Eingabewerte -- die Argumente der Funktion -- 
+auf Ausgabewerte abgebildet werden.
+Diese Vorschrift ist die \emph{Definition} der Funktion.
+
+Diese Darstellung ist intensional -- \todo{Was genau bedeutet intensional hier?}.
+
+\todo{vgl. Algorithmus -- ist eine Funktion in diesem Sinn ein Algorithmus?}
+\todo{Anmerkung: offensichtlich eng verwandt: Konzept der berechenbaren Funktion}
+\todo{Anmerkung: Reifiziert: Input/Output-Charakter von Funktionen}
+\todo{Anmerkung: Reifiziert: Computationale Aspekte der Funktion}
+\todo{Recherchieren: Ist das die ältere Auffassung einer Funktion?
+	  \url{https://en.wikipedia.org/wiki/History_of_the_function_concept}}
+
+\paragraph{Funktionen als Graph}
+
+Bei der Formalisierung einer Funktionen als Graph 
+wird diese als spezielle Relation aufgefasst: 
+als Menge von Paaren bei denen jedes erste Element in Relation zu genau
+einem zweiten Element steht.
+
+\begin{comment}
+Definition Funktionsgraph: https://de.wikipedia.org/wiki/Funktionsgraph
+\end{comment}
+
+Diese Darstellung ist extensional -- \todo{Was genau bedeutet extensional hier?}.
+
+\todo{
+Recherchieren: Was genau ist der Vorteil von Funktionen dargestellt als Graphen.
+Warum ist dieses Konzept besser zu handhaben und hat sich durchgesetzt?
+Funktionen dargestellt als Abbildungsvorschriften sind nicht immer
+automatisiert vergleichbar -- siehe Halteproblem.
+}
+
+\paragraph{Essentielle Eigenschaften des Konzepts 
+			\enquote{Funktionen als Abbildungsvorschriften}}
+
+Das Konzept \enquote{Funktionen als Abbildungsvorschriften} wird 
+in seiner umfangreichsten Extension verstanden;
+Funktionen können sowohl in (Fragmenten von) natürlichen Sprachen 
+reprästentiert werden (Deutsch, Englisch, \dots),
+sowie in formalen Sprachen (Programmiersprachen, \dots \todo{ergänzen}).
+
+All diese Repräsentationsformen teilen gemeinsame essentielle Eigenschaften,
+welche auch den Ausgangspunkt für die Theorie des Lambdakalküls bilden:
+\begin{enumerate}
+\item \label{typefree} Es sind typfreie Strukturen.
+\item \label{fundata}  Objekte dieser Struktur können sowohl als Funktion 
+	  sowie als Daten interpretiert werden.
+\end{enumerate}
+
+Aus \ref{typefree} und \ref{fundata} folgt eine wichtige Eigenschaft:
+Funktionen in dieser Darstellungsweise können auf sich selbst angewendet werden.
+Dies wird bei der Formalisierung von Funktionen als Graphen 
+(damit auch in mengentheoretischen Darstellungen wie \emph{ZFC}) 
+durch das \emph{Fundierungsaxiom} (auch \emph{Regularitätsaxiom})
+verhindert.
+
+\todo{
+Recherchieren: Was genau sagt das Fundierungsaxiom aus?
+\url{https://de.wikipedia.org/wiki/Zermelo-Fraenkel-Mengenlehre}
+}
+
+% ------------------------------------------------------------------------------
+\newpage
+\section{Aspekte des untypisierten Lambdakalküls}
+
+Das untypisiere Lambdakalkül kann aus drei Perspektiven betrachtet werden:
+\begin{enumerate}
+\item Pures Lambdakalkül:\\
+	Die erste Perspektive auf das Lambdakalkül fokussiert das eigentliche System:
+	das formale Objekt wird hier ohne Rekursion auf einen intendierten 
+	Verwendungszweck untersucht.
+	
+	Natürlich gelten Ergebnisse die in diesem Bereich erzielt werden auch in den
+	Anwendungsbereichen des Kalküls.
+\item Lambdakalkül in der Informatik:\\
+	Die zweite Perspektive ist die Sicht der Informatik:
+	Das Lambdakalkül hat in dieser Wissenschaft eine große und, 
+	mit der zunehmenden Verwendung funktionaler Programmiersprachen, 
+	weiter wachsende Bedeutung. 
+\item Lambdakalkül als Grundlage der Mathematik:\\
+	Die dritte Perspektive untersucht das Lambdakalkül hinsichtlich
+	seiner Eigung als unifizierende Darstellung von Logik und Mathematik.
+\end{enumerate}
+
+\todo{erwähnen: Lambdakalkül in der Linguistik}
+
+% ------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+\newpage
+\section{Pures Lambdakalkül}
+
+In diesem Abschnitt soll das Lambdakalkül als solches eingeführt,
+und ohne Bezugnahme auf seine weitere mögliche Verwendung untersucht
+werden. Selbstverständlich gelten alle in diesem Abschnitt vorgestellten
+Ergrebnisse auch unter einer Interpretation des Systems als Programmiersprache
+und alle weitere Verwendungen.
+
+
+% ------------------------------------------------------------------------------
+\subsection{Definition}
+
+\begin{comment}
+weitere untergliederung:
+Definition
+Conversion
+Reduction
+Theorien
+Modelle
+\end{comment}
+
+\paragraph{Syntaktische Primitive des Lambdakalküls: Terme der Theorie}
+% wörtliche übersetzung
+
+Zentraler Gegenstand des Lambdakalküls sind Funktionen.
+Zwei zentrale Eigenschaften bilden den Ausgangspunkt der Theorie:
+\begin{enumerate}
+\item \label{funmap} Die explizite Kodierung von Funktionen und 
+	Funktionsargumenten als deklarative Abbildungsvorschriften.
+\item \label{funio} 
+	Die Eigenschaften dieser Funktionsterme bei Anwendungen auf Argumente.
+\end{enumerate}
+
+Terme des Lambdakalküls: % Terme denotieren Funktionen
+Die Terme der Theorie $λ$ besteht aus der Menge $Λ$ der Lambdaterme.
+Diese Terme werden induktive aus den drei primitiven der Sprache aufgebaut:
+Abstraktion, Applikation und Variablen.
+
+\begin{definition}[Syntax des Lambdakalküls]
+Aus \ref{funmap} und \ref{funio} ergeben sich die 
+drei primitiven Sprachelemente des Kalküls:
+\begin{verbatim}
+Λ = Var		(Variable)
+  | λ.Λ		(Abstraktion)
+  | Λ Λ		(Applikation)
+\end{verbatim}
+\end{definition}
+
+Abstraktion und Applikation sind Gegenoperationen.
+
+\paragraph{Semantische Primitive des Lambdakalüls: Formeln der Theorie}
+
+Formeln/Aussagen des Lambdakalküls: % Formeln denotieren Wahrheitswerte
+Die innerhalb des Systems formulierten Aussagen sind Gleichungen und 
+damit Identitätsaussagen zwischen Lambdatermen.
+\todo{Zusammenhang: Equational Reasoning?}
+
+\begin{definition}[Axiom β (Betareduktion)]
+
+Das Kalkül hat als einzige Axiome Instanzen des Axiomenschemas $β$.
+
+\begin{verbatim}
+
+λx.Λ Λ = Λ Λ 
+
+\end{verbatim}
+
+\end{definition}
+
+
+
+\paragraph{Unäre Funktionen und Currying}
+% wörtliche übersetzung
+Im Lambdakalkül werden ausschließlich unäre Funktionen behandelt;
+allerdings stellt dies keine Einschränkung dar:
+n-äre Funktionen können durch eine \enquote{Schönfinkeln/Currying}
+genannte Methode auf bedeutungsgleiche unäre funktionen abgebildet werden. 
+
+\todo{
+Ist wohl ein sehr wichtiges Prinzip:
+Semantische Konsequenzen, iwas mit Kartesisch geschlossenen Kategorien S.6
+}
+
+
+
+\paragraph{Intensionaler Charakter des Systems}
+% wörtliche übersetzung
+Das Konzept von Funktionen als Abbildungsvorschriften % Algorithmen
+ist intensional.
+Aufgrund dieses intensionalen Charakters sind die linguistischen Mittel 
+diese Funktionen zu beschreiben -- die Lambdaterme -- von großer Bedeutung.
+
+
+\paragraph{Verbindung des Lambdakalküls und der Kategorientheorie}
+% wörtliche übersetzung
+Gegenstand beider Theorien sind Funktionen, allerdings aus unterschiedlichen
+Blickwinkeln mit verschiedenen Perspektiven:
+\begin{itemize}
+\item Das Lambdakalkül ist eine intensionale Formalisierung 
+	  von Funktionen als Algorithmen und deren Anwendungen auf ebenfalls
+	  als Funktionen definierte Argumente
+\item Die Kategorientheorie ist eine algebraische Formalisierung
+	  von Funktionen unter Komposition \todo{ergänzen}
+\end{itemize}
+
+
+
+% ------------------------------------------------------------------------------
+\subsection{Konversion}
+
+
+
+% ------------------------------------------------------------------------------
+\subsection{ReduKtion}
+
+
+
+% ------------------------------------------------------------------------------
+\subsection{Theorien}
+
+
+
+% ------------------------------------------------------------------------------
+\subsection{Modelle}
+
+
+
+% ------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+\newpage
+\section{Lambdakalkül in der Informatik}
+
+
+
+% ------------------------------------------------------------------------------
+\subsection{Lambdakalkül in der Berechenbarkeitstheorie}
+
+Zum einen ist das Kalkül in höchstem Maß relevant für die Grundlagen
+der Berechenbarkeitstheorie und Rekursionstheorie.
+In den 1930er Jahren wurde das bislang nur informal verwendete Konzept 
+der \enquote{effektiv berechenbaren Funktion} auf drei verschiedene Arten
+formalisiert:
+
+\begin{enumerate}
+\item $μ$-rekursive Funktion bzw. partiell rekursive Funktionen.
+	  \todo{Fußnote: von Gödel und Jaques Herbrand)}
+\item Turing-berechenbare Funktionen basierend 
+	  auf einem abstrakten Maschinenmodell: den Turingmaschinen.
+	  \todo{Fußnote: von Alan Turing}
+\item $λ$-definierbare Funktionen.
+	  \todo{Fußnote: von Alonzo Chruch}
+\end{enumerate}
+
+Obwohl jede diese Formalisierungen einen anderen Aspekt berechenbarer Funktionen
+als Ausgangspunkt, und damit auch andere primitiven als Sprachelemente reifiziert,
+konnte durch Turing und Church gezeigt werden, dass alle drei Konzepte den 
+gleichen Gegenstandsbereich erfassen. 
+\todo{Gegenstandsbereich erfassen ... ist das korrekt?}
+
+Folgt man der Churchschen These ist dies die 
+Klasse der effektiv berechenbaren Funktionen:
+
+\begin{definition}{Churchsche These}
+Die durch die formale Definition der Turing-Berechenbarkeit
+(Äquivalent: While-Berechenbarkeit, Goto-Berechenbarkeit,
+$μ$-Rekursivität oder $λ$-Definierbarkeit) erfasste Klasse von Funktionen
+stimmt genau mit der Klasse der im intuitiven Sinn berechenbaren 
+Funktionen überein.
+\end{definition}
+
+
+% ------------------------------------------------------------------------------
+\subsection{Lambdakalkül als paradigmatische Progammiersprache}
+
+Zum anderen besitzt das Lambdakalkül die wesentlichen Elemente
+einer Programmiersprache:
+Trotz seiner Einfachheit % \begin{comment} wie in Teil ... dargestellt \end{comment}
+ist es gemäß der Churchschen These stark genug um alle intuitiv berechenbaren
+Funktionen auszudrücken;
+gerade wegen seiner schlichten Eleganz kann es als die prototypische
+Programmiersprache aufgefasst werden die ein ganzes Paradigma begründet --
+das der funktionalen Programmiersprachen.
+
+Der Grad in dem verschiedene Programmiersprachen anleihen vom Lambdakalkül 
+nehmen ist dabei fließend: 
+Das Spektrum reicht von der Übernahme einiger syntaktischer Konstrukte 
+wie anonymen Funktionen bishin zu einer größtmöglichen semantischen 
+Korrespondenz.
+
+Moderne funktionale Programmiersprachen beziehen neben syntaktischen Anleihen
+sowohl ihre operationale als auch denotationale Semantik in großer 
+Übereinstimmung mit den dazu korrespondierenden Semantiken des Lambdakalküls.
+\todo{vll. besser: ein vorteil denotatineller Semantiken im Vergleich
+zu operationalen Semantiken ist ...}
+Ein wesentlicher Vorteil dieses Ansatzes im Vergleich zu den informellen 
+Semantiken prozeduraler Programmiersprachen ist die 
+vergleichsweise einfache funktionale Interpretation von Programmen 
+dieser Sprachen -- es handelt sich nicht um Zustandstransformatoren
+die zwischen oftmals nur implizit gegebenen Maschinenzuständen abbilden,
+sondern um Algorithmen in deklarativer Darstellung die von dem
+zu Grunde liegenden Maschinenmodell und dessen Konfigurationen abstrahieren.
+Damit sind alle (oder zumindest ein großer Teil der) Wahrheiten gültig 
+die über das Lambdakalkül ausgesagt werden können.
+Dies erleichtert die Analyse komplexer Systeme und erlaubt die unkomplizierte
+Anwendung formaler mathematischer Methoden bei der Analyse von Programmen.
+
+\todo{
+Anmerkung zur zunehmenden Verwendung funktionaler Elemente in objektorientierten
+Programmiersprachen
+}
+
+\todo{
+Verweis auf die Verschiedenen Arten von Semantiken (operational, denotationell,
+...
+}
+
+\begin{comment}
+Dieser Teil behandelt eine Übersicht über die denotationelle Semantik 
+des Lambdakalküls ... vll. besser an eine andere Stelle 
+\end{comment}
+
+\paragraph{Denotationelle Semantik und das untypisierte Lambdakalkül}
+% direkt übersetzt nach Barendregt
+Die Objekte des untypisierten Lambdakalküls sind -- 
+auf Grund der Typfreiheit des Systems -- nicht stratifiziert.
+Es ist daher nicht trivial ein Modell für das System zu finden: %besser konstruieren?
+eine Menge $X$ in welche ihr Funktionenraum $X → X$ eingebettet ist.
+Im allgemeinen Fall ist dies auf Grund der zunehmenden Kardianlität unmöglich.
+
+Scott konnte dieses Problem 1969 lösen:
+Modelle für das Lambdakalkül können konsturiert werden in dem 
+der Funktionenraum $X → X$ auf kontinuierliche \todo{continuous Definition?}
+Funktionen über $X$ eingeschränkt wird.
+
+Dieser Ansatz ist leistungsstark genug um den folgenden wichtigen
+Bestandteilen funktionaler Programmiersprachen eine Bedeutung zu geben:
+Rekursion (least fixpoint) und (algebraischen) Datentypen.
+
+Scott-Semantiken sind allerdings in einem wichtigen Punkt schwach:
+sie erfassen bis auf wenige Ausnahmen nur sequentielle Funktionen.
+\todo{recherchieren ... Was ist mit referentieller Transparenz?
+wie werden hier sequentielle Funktionen definiert?}
+Einige parallele Funktionen wie \enquote{parallel or} können 
+auch mit dieser Semantik modelliert werden.
+
+
+
+% ------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+\newpage
+\section{Lambdakalkül als Grundlage der Mathematik}
+
+Die Schöpfer des Lambdakalküls \todo{Wer genau?} wollten mittels 
+diesen Systems zwei Ziele erreichen:
+\begin{enumerate}
+\item \label{funtheory} Eine generelle Funktionentheorie zu entwickeln
+\item \label{exfuntheory} Diese Funtkionentheorie um logische Konzepte 
+	  zu ergänzen und damit ein System zu erhalten, 
+	  in dem Logiken \todo{Logiken oder eine Logik?} 
+	  und Teile der Mathematik einheitlich formuliert werden können.
+	  \todo{Was muss eine Grundlage der Mathematik überhaupt leisten können?}
+\end{enumerate}
+
+Die Entwicklung einer konsistenten Funktionentheorie wurde erfolgreich
+von Curry vorangetrieben: Resultat ist die Kombinatorenlogik. 
+\todo{wird die noch vorgestellt?}
+
+Bislang ist es noch nicht gelungen das Lambdakalkül als grundlegendes
+System der Mathematik zu verwerden:
+Churchs ursprüngliches System war inkonsistent, wie durch das 
+Kleene-Rosser-Paradoxon bewiesen wurde. \todo{Jahreszahl}
+Weitere Ansätze, die zum Teil auf dem unvollendeten Werk
+von Curry beruhen, werden noch verfolgt.
+
+Ansätze die an Stelle des untypisierten Lambdakalküls typisierte Varianten
+verwenden sind bislang wesentlich erfolgreicher -- 
+unter Ausnutzung der Curry-Howard-Korrespondenz, \todo{...Lambek?}
+die eine Verbindung zwischen typisierten Lambdakalkuli, verschiedenen Logiken
+und Kategorientheorie herstellt, 
+konnten weitreichende Ergebnisse erzielt werden.
+
+Die Verbidungen dieser drei Bereiche wird im weiteren Verlauf dieser Arbeit
+eine bedeutende Rolle spielen.
+
+
+\todo{
+Anmerkung: zentrales Thema bei Funktionen und ... - 
+finitisierung des Transfinisierung des Transfiniten
+}
 
 
 

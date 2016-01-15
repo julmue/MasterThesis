@@ -7,4 +7,5 @@
 *.bib
 *.xml
 *.pdf
+*.tdo
 _minted*
