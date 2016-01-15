@@ -2,7 +2,7 @@
 xelatexOptions = -halt-on-error -file-line-error -shell-escape
 
 # document
-mainDoc = MasterThesis
+mainDoc = thesis
 
 # targets
 pdf: $(mainDoc).tex
