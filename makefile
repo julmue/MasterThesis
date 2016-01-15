@@ -14,3 +14,6 @@ pdf: $(mainDoc).tex
 .PHONY: clean
 clean: 
 	rm -r *.pdf *.log *.aux *.toc *.out *.bbl *.blg *.bib *.xml *.tdo _minted* 
+	rm ./prelude/*.aux
+	rm ./untypedLambda/*.aux
+	rm ./typedLambda/*.aux
